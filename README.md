@@ -6,7 +6,7 @@ Após isso faça o clone do repositório  do ply .
 
 execute :
 
-**git clone https://github.com/dabeaz/ply.git
+**git clone https://github.com/dabeaz/ply.git**
 
 **cd ply/**
 
@@ -25,5 +25,6 @@ depois rode:
 **pip install ply**
 
 Após esse comando seu ply já vai ser instalado e poderá ser usado em todos os seus projetos usando :
+
 **import ply.lex as lex**
 
