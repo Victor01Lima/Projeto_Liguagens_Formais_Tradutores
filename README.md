@@ -5,9 +5,12 @@ Para instalar o ply na sua máquina  é necessário ter o pyhton3 instalado.
 Após isso faça o clone do repositório  do ply .
 
 execute :
+
 **git clone https://github.com/dabeaz/ply.git
-cd ply/
-python3 install.py**
+
+**cd ply/**
+
+**python3 install.py****
 
 Se tudo ocorrer bem, o ply irá instalar o ply como pacote global no seu computador, e poderá ser importado em todos os seus projetos.
 
