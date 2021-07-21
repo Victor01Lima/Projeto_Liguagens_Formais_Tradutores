@@ -1,0 +1,88 @@
+topLevelDeclaration::= functionSignature body
+                         | type initializedIdentifierList ‘;’
+                         | functionSignature body topLevelDeclaration   
+                         | type initializedIdentifierList  ‘;’  topLevelDeclaration 
+
+
+initializedIdentifierList ::= ID '=' expression (, ID '=' expression)*
+
+functionSignature  ::=  type ? ID  formalParameterPart 
+
+type  ::= VOID | STRING | BOOLEANO | INT | FLOAT | VAR
+
+formalParameterPart  ::=   formalParameterList 
+
+formalParameterList ::= ‘(’ ‘)’
+     | ‘(’ normalFormalParameters  ‘,’? ‘)’
+
+normalFormalParameters ::=  normalFormalParameter (‘,’ normalFormalParameter )*
+
+normalFormalParameter  ::=  type ID
+
+body ::= ‘{’ statements ‘}’
+                 | ‘{’ ‘}’
+
+statements ::= statements statement
+              | statement
+
+statement::= body
+     | localVariableDeclaration
+     | forStatement
+     | whileStatement
+     | ifStatement  
+     | breakStatement
+     | continueStatement
+     | returnStatement
+     | expressionStatement
+
+
+localVariableDeclaration ::= TIPO ID ('=' expression)? (',' ID ('=' expression)?)* ';'
+
+forStatement::= FOR ‘(’〈forLoopParts〉‘)’ statement
+              | FOR ‘(’〈forLoopParts〉‘)’ body
+
+forLoopParts::= (localVariableDeclaration |expression? ‘;’) expression? ‘;’ expressionList?
+               | Tipo? ID IN expression
+
+expressionList ::= expression
+               | expression ',' expresssionList 
+
+whileStatement::= WHILE ‘(’expression‘)’ statement
+                    | WHILE ‘(’expression‘)’ body
+
+ifStatement::=   IF ‘(’expression‘)’ statement (else statement)? 
+               | IF ‘(’expression‘)’ body (else body)?
+               | IF ‘(’expression‘)’ statement (else body)?
+               | IF ‘(’expression‘)’ body (else statement)?
+
+breakStatement::= BREAK  ‘;’
+
+continueStatement::= CONTINUE ‘;’
+
+returnStatement::= RETURN expression? ‘;’
+
+expressionStatement ::= expression? ‘;’
+
+expression::=  expression operator expression
+              | unaryop expression
+              | expression '++'
+              | expression '--'
+              | call
+              | literal
+              | primary
+
+operator ::= '=' | '*=' | '/=' | '+=' | '-=' | '||'
+             | '&&' |  '==' | '!=' | '<' | '>' | '<='
+             | '>=' | '|'   | '&'  | '<<'| '>>'| '+'
+             | '-' | '*' | '/' | '%' 
+
+unaryop ::= '-' | '!' | '++' | '--' | '+'
+
+primary::= call
+     | literal
+     | ID
+     |‘(’expression‘)’
+
+literal ::= booleanLiteral
+     | numericLiteral
+     | stringLiteral
