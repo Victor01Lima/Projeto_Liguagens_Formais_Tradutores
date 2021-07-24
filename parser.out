@@ -1,0 +1,206 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ABSTRACT
+    AND
+    AS
+    ASSERT
+    ASYNC
+    AWAIT
+    BOOL
+    BREAK
+    CASE
+    CATCH
+    CLASS
+    CONST
+    CONTINUE
+    COVARIANT
+    DEFAULT
+    DEFERRED
+    DIFFERENT
+    DIVIDE
+    DIVIDEINT
+    DO
+    DOUBLE
+    DYNAMIC
+    ELSE
+    ENUM
+    EQUAL
+    EXPORT
+    EXPRESS
+    EXTENDS
+    EXTENSION
+    EXTERNAL
+    FACTORY
+    FALSE
+    FINAL
+    FINALLY
+    FOR
+    FUNCTION
+    GET
+    GREATER_THAN
+    GREATER_THAN_OR_EQUAL_TO
+    HIDE
+    IF
+    IMPLEMENTS
+    IMPORT
+    IN
+    INT
+    INTERFACE
+    INVERT
+    IS
+    LESS_THAN
+    LESS_THAN_OR_EQUAL_TO
+    LIBRARY
+    LIST
+    LOGIC_AND
+    LOGIC_OR
+    MAP
+    MINUS
+    MIXIN
+    MULT
+    NEW
+    NULL
+    NUM
+    ON
+    OPERATOR
+    OR
+    PART
+    PERCENTAGE
+    PLUS
+    RETHROW
+    RETURN
+    SET
+    SHIFT_LEFT
+    SHIFT_RIGHT
+    SHOW
+    STATIC
+    STRING
+    SUPER
+    SWITCH
+    SYNC
+    THIS
+    THROW
+    TRUE
+    TRY
+    TYPEDEF
+    UNARY_BITWASE_COMPLEMENT
+    VAR
+    VOID
+    WHILE
+    WITH
+    XOR
+    YIELD
+
+Grammar
+
+Rule 0     S' -> topLevelDeclaration
+Rule 1     topLevelDeclaration -> functionSignature body
+Rule 2     topLevelDeclaration -> type initializedIdentifierList POINT_V
+Rule 3     topLevelDeclaration -> functionSignature body topLevelDeclaration
+Rule 4     topLevelDeclaration -> type initializedIdentifierList POINT_V topLevelDeclaration
+
+Terminals, with rules where they appear
+
+ABSTRACT             : 
+AND                  : 
+AS                   : 
+ASSERT               : 
+ASYNC                : 
+AWAIT                : 
+BOOL                 : 
+BREAK                : 
+CASE                 : 
+CATCH                : 
+CLASS                : 
+CONST                : 
+CONTINUE             : 
+COVARIANT            : 
+DEFAULT              : 
+DEFERRED             : 
+DIFFERENT            : 
+DIVIDE               : 
+DIVIDEINT            : 
+DO                   : 
+DOUBLE               : 
+DYNAMIC              : 
+ELSE                 : 
+ENUM                 : 
+EQUAL                : 
+EXPORT               : 
+EXPRESS              : 
+EXTENDS              : 
+EXTENSION            : 
+EXTERNAL             : 
+FACTORY              : 
+FALSE                : 
+FINAL                : 
+FINALLY              : 
+FOR                  : 
+FUNCTION             : 
+GET                  : 
+GREATER_THAN         : 
+GREATER_THAN_OR_EQUAL_TO : 
+HIDE                 : 
+IF                   : 
+IMPLEMENTS           : 
+IMPORT               : 
+IN                   : 
+INT                  : 
+INTERFACE            : 
+INVERT               : 
+IS                   : 
+LESS_THAN            : 
+LESS_THAN_OR_EQUAL_TO : 
+LIBRARY              : 
+LIST                 : 
+LOGIC_AND            : 
+LOGIC_OR             : 
+MAP                  : 
+MINUS                : 
+MIXIN                : 
+MULT                 : 
+NEW                  : 
+NULL                 : 
+NUM                  : 
+ON                   : 
+OPERATOR             : 
+OR                   : 
+PART                 : 
+PERCENTAGE           : 
+PLUS                 : 
+POINT_V              : 2 4
+RETHROW              : 
+RETURN               : 
+SET                  : 
+SHIFT_LEFT           : 
+SHIFT_RIGHT          : 
+SHOW                 : 
+STATIC               : 
+STRING               : 
+SUPER                : 
+SWITCH               : 
+SYNC                 : 
+THIS                 : 
+THROW                : 
+TRUE                 : 
+TRY                  : 
+TYPEDEF              : 
+UNARY_BITWASE_COMPLEMENT : 
+VAR                  : 
+VOID                 : 
+WHILE                : 
+WITH                 : 
+XOR                  : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+body                 : 1 3
+functionSignature    : 1 3
+initializedIdentifierList : 2 4
+topLevelDeclaration  : 3 4 0
+type                 : 2 4
+

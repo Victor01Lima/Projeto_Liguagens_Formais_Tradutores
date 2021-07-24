@@ -4,7 +4,7 @@
 # tokenizer for a simple expression evaluator for
 # numbers and +,-,*,/
 
-# Author Victor da Luz Lima, José Nathanel e Davi de jesus
+# Author Victor da Luz Lima, Jose Nathanel e Davi de jesus
 import ply.lex as lex
 
 # List of token names.   This is always required
@@ -79,6 +79,7 @@ tokens = (
     'WHILE',
     'WITH',
     'YIELD',
+    'POINT_V',
 
     #OPERADORES ARITIMETICOS
     'PLUS',
@@ -89,10 +90,10 @@ tokens = (
     'DIVIDEINT',
     'PERCENTAGE',
 
-    # OPERADORES LÓGICOS
+    # OPERADORES LOGICOS
     'INVERT',
     'LOGIC_AND',
-#A FAZER 'LOGIC_OR',
+    'LOGIC_OR',
 
     # OPERADORES RELACIONAIS
     'EQUAL',
@@ -164,6 +165,7 @@ t_NUM = r'num'
 T_ON = r'on'
 t_OPERATOR = r'operator'
 t_PART = r'part'
+t_POINT_V =r';'
 t_RETHROW = r'rethrow'
 t_RETURN = r'return'
 t_SET = r'set'
@@ -201,9 +203,9 @@ t_LESS_THAN = r'\<'
 t_GREATER_THAN_OR_EQUAL_TO = r'\<='
 t_LESS_THAN_OR_EQUAL_TO = r'\>='
 
-# OPERADORES LÓGICOS
-t_INVERT = r'\!'
-# A fazer =>     t_LOGIC_OR = r'\||'
+# OPERADORES LOGICOS
+t_INVERT = r'\!'  
+t_LOGIC_OR = r'\|\|'
 t_LOGIC_AND = r'\&&'
 
 #BIT TO BIT
@@ -241,14 +243,13 @@ lexer = lex.lex()
 
 # Test it out
 data = '''
- 
+ ||
 '''
 
 # Give the lexer some input
 lexer.input(data)
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break  # No more input
-    print(tok.type, tok.value, tok.lineno, tok.lexpos)
+#while True:
+ #   tok = lexer.token()
+  ##     break  # No more input
+   # print(tok.type, tok.value, tok.lineno, tok.lexpos)
