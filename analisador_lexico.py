@@ -38,6 +38,7 @@ tokens = (
     'FACTORY',
     'FALSE',
     'FINAL',
+    'FLOAT',
     'FINALLY',
     'FOR',
     'FUNCTION',
@@ -82,8 +83,10 @@ tokens = (
     'POINT_V',
 
     #OPERADORES ARITIMETICOS
+    'PLUS_PLUS',
     'PLUS',
     'MINUS',
+    'MINUS_MINUS',
     'EXPRESS',
     'MULT',
     'DIVIDE',
@@ -94,9 +97,16 @@ tokens = (
     'INVERT',
     'LOGIC_AND',
     'LOGIC_OR',
-
+    #OUTROS
+    'POINT_COMMA',
+    'COMMA',
+    'OPEN_PARENTHESES',
+    'CLOSE_PARENTHESES',
+    'OPEN_KEYS',
+    'CLOSE_KEYS',
     # OPERADORES RELACIONAIS
     'EQUAL',
+    'EQUAL_EQUAL',
     'DIFFERENT',
     'GREATER_THAN',
     'LESS_THAN',
@@ -141,6 +151,7 @@ t_EXTENDS = r'extends'
 t_EXTENSION = r'extension'
 t_EXTERNAL = r'external'
 t_FACTORY = r'factory'
+t_FLOAT = r'float'
 t_FALSE = r'false'
 t_FINAL = r'final'
 t_FINALLY = r'finally'
@@ -162,7 +173,7 @@ t_MAP = r'Map'
 t_NEW = r'new'
 t_NULL = r'null'
 t_NUM = r'num'
-T_ON = r'on'
+t_ON = r'on'
 t_OPERATOR = r'operator'
 t_PART = r'part'
 t_POINT_V =r';'
@@ -186,17 +197,26 @@ t_WHILE = r'while'
 t_WITH = r'with'
 t_YIELD = r'yield'
 
-#OPERADORES ARITIMETICOS
+#OPERADORES ARITMETICOS
+t_PLUS_PLUS = r'\+\+'
 t_PLUS = r'\+'
-t_MINUS = r'-'
+t_MINUS = r'\-'
+t_MINUS_MINUS = r'\-\-'
 t_EXPRESS = r'-expr'
 t_MULT = r'\*'
 t_DIVIDE = r'/'
 t_DIVIDEINT = r'~/'
 t_PERCENTAGE = r'%'
-
+###OUTROS
+t_POINT_COMMA = r';'
+t_OPEN_KEYS = r'{'
+t_CLOSE_KEYS = r'}'
+t_COMMA = r','
+t_OPEN_PARENTHESES = r'('
+t_OPEN_PARENTHESES = r')'
 # OPERADORES RELACIONAIS
-t_EQUAL = r'\=='
+t_EQUAL= r'\='
+t_EQUAL_EQUAL = r'\=\='
 t_DIFFERENT = r'\!='
 t_GREATER_THAN = r'\>'
 t_LESS_THAN = r'\<'

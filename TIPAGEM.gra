@@ -38,8 +38,8 @@ statement::= body
 
 localVariableDeclaration ::= TIPO ID ('=' expression)? (',' ID ('=' expression)?)* ';'
 
-forStatement::= FOR ‘(’〈forLoopParts〉‘)’ statement
-              | FOR ‘(’〈forLoopParts〉‘)’ body
+forStatement::= FOR ‘(’ forLoopParts ‘)’ statement
+              | FOR ‘(’ forLoopParts ‘)’ body
 
 forLoopParts::= (localVariableDeclaration |expression? ‘;’) expression? ‘;’ expressionList?
                | Tipo? ID IN expression
