@@ -83,15 +83,19 @@ tokens = (
     'POINT_V',
 
     #OPERADORES ARITIMETICOS
+    'MULTIPLICATION_DIVISION',
     'PLUS_PLUS',
     'PLUS',
     'MINUS',
     'MINUS_MINUS',
     'EXPRESS',
     'MULT',
+    'MINUS_EQUAL',
     'DIVIDE',
+    'DIVIDE_EQUAL',
     'DIVIDEINT',
     'PERCENTAGE',
+    'PLUS_EQUAL',
 
     # OPERADORES LOGICOS
     'INVERT',
@@ -198,43 +202,47 @@ t_WITH = r'with'
 t_YIELD = r'yield'
 
 #OPERADORES ARITMETICOS
+t_DIVIDE_EQUAL = r'\/\='
+t_MULTIPLICATION_DIVISION = r'\*\='
 t_PLUS_PLUS = r'\+\+'
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MINUS_MINUS = r'\-\-'
+t_MINUS_EQUAL = r'\-\='
 t_EXPRESS = r'-expr'
 t_MULT = r'\*'
-t_DIVIDE = r'/'
-t_DIVIDEINT = r'~/'
-t_PERCENTAGE = r'%'
+t_DIVIDE = r'\/'
+t_DIVIDEINT = r'\/'
+t_PERCENTAGE = r'\%'
+t_PLUS_EQUAL =r'\+\='
 ###OUTROS
-t_POINT_COMMA = r';'
-t_OPEN_KEYS = r'{'
-t_CLOSE_KEYS = r'}'
-t_COMMA = r','
-t_OPEN_PARENTHESES = r'('
-t_OPEN_PARENTHESES = r')'
+t_POINT_COMMA = r'\;'
+t_OPEN_KEYS = r'\{'
+t_CLOSE_KEYS = r'\}'
+t_COMMA = r'\,'
+t_OPEN_PARENTHESES = r'\('
+t_OPEN_PARENTHESES = r'\)'
 # OPERADORES RELACIONAIS
 t_EQUAL= r'\='
 t_EQUAL_EQUAL = r'\=\='
-t_DIFFERENT = r'\!='
+t_DIFFERENT = r'\!\='
 t_GREATER_THAN = r'\>'
 t_LESS_THAN = r'\<'
-t_GREATER_THAN_OR_EQUAL_TO = r'\<='
-t_LESS_THAN_OR_EQUAL_TO = r'\>='
+t_GREATER_THAN_OR_EQUAL_TO = r'\<\='
+t_LESS_THAN_OR_EQUAL_TO = r'\>\='
 
 # OPERADORES LOGICOS
 t_INVERT = r'\!'  
-t_LOGIC_OR = r'\|\|'
-t_LOGIC_AND = r'\&&'
+t_LOGIC_OR = r'\|'
+t_LOGIC_AND = r'\&'
 
 #BIT TO BIT
-t_AND = r'\&'
-t_OR = r'\|'
+t_AND = r'\&\&'
+t_OR = r'\|\|'
 t_XOR = r'\^'
 t_UNARY_BITWASE_COMPLEMENT = r'\~'
-t_SHIFT_LEFT = r'\<<'
-t_SHIFT_RIGHT = r'\>>'
+t_SHIFT_LEFT = r'\<\<'
+t_SHIFT_RIGHT = r'\>\>'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
