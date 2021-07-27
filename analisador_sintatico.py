@@ -49,11 +49,13 @@ def p_formalParameterList_void_(p):
 
 ### Metodo formalParameterList ###
 def p_formalParameterList_normalFormal_Parameters(p):
-    '''formalParameterList : OPEN_PARENTHESES normalFormalParameters ','?  CLOSE_PARENTHESES  '''
+    '''formalParameterList : OPEN_PARENTHESES normalFormalParameters COMMA  CLOSE_PARENTHESES  
+                            |    OPEN_PARENTHESES normalFormalParameters  CLOSE_PARENTHESES 
+'''
 
 ### Metodo normalFormalParameters ###
 def p_normalFormalParameters(p): ###DUVIDA
-    '''normalFormalParameters :normalFormalParameter OPEN_PARENTHESES COMMA normalFormalParameter CLOSE_PARENTHESES  '''
+    '''normalFormalParameters : normalFormalParameter OPEN_PARENTHESES COMMA normalFormalParameter CLOSE_PARENTHESES  '''
 
 ### Metodo normalFormalParameter ###
 def p_normalFormalParameter(p):
@@ -103,8 +105,17 @@ def p_statement_expressionStatement(p):
 
 ### Metodo localVariableDeclaration ###
 def p_localVariableDeclaration(p): #duvida
-    '''localVariableDeclaration : type ID (EQUAL expression)? ( COMMA ID ( EQUAL expression)?)* POINT_COMMA'''
-
+    '''localVariableDeclaration : type ID EQUAL expression expression_one_equal POINT_COMMA
+                                | type ID  expression_one_equal POINT_COMMA 
+                                | type ID EQUAL expression  COMMA ID  POINT_COMMA
+                                | type ID  COMMA ID  POINT_COMMA
+    '''
+def p_expression_one_equal(p):
+   ''' expression_one_equal : COMMA ID  EQUAL expression 
+                            | COMMA ID
+                            | COMMA ID  EQUAL expression expression_one_equal
+                            | COMMA ID expression_one_equal'''
+    
 ### Metodo forStatement ###
 def p_forStatement_statement(p):
     '''forStatement : FOR OPEN_PARENTHESES  forLoopParts CLOSE_PARENTHESES statement'''
@@ -114,13 +125,13 @@ def p_forStatement_body(p):
 
 ### metodo forLoopParts ###
 def p_forLoopParts_localVariableDeclaration(p):
-    '''forLoopparts : localVariableDeclaration POINT_COMMA expression? POINT_COMMA expressionList? '''
+    '''forLoopparts : localVariableDeclaration POINT_COMMA (expression)? POINT_COMMA (expressionList)? '''
 
 def p_forLoopParts_expression(p):
-    '''forLoopparts : expression POINT_COMMA expression? POINT_COMMA expressionList? '''
+    '''forLoopparts : expression POINT_COMMA (expression)? POINT_COMMA (expressionList)? '''
 
 def p_forLoopParts_type(p):
-    '''forLoopParts ; type? ID IN expression'''
+    '''forLoopParts : type? ID IN expression'''
 
 ### Metodo expressionList ###
 def p_expressionList_expression(p):
@@ -156,15 +167,18 @@ def p_continueStatement(p):
 
 ### Metodo returnStatement ###
 def p_returnStatement(p):
-    ''' RETURN expression? POINT_COMMA '''
+    '''returnStatement : RETURN expression? POINT_COMMA '''
 
 ### Metodo expressionStatement ###
 def p_expressionStatement(p):
-    '''returnStatement : expressionStatement : expression? POINT_COMMA '''
+    '''returnStatement : expressionStatement : expression? POINT_COMMA ''' #CRIAR NOVA REGRA SEM EXPRESSION
 
 ### Metodo expression ###
 def p_expression_expression_operator_expression(p):
-    ''' expression : expression operator expression'''
+    ''' expression : expression operator expression''' #obs
+      #  expression : expression operator expression_1
+      #  expression1 :
+      #
 
 def p_expression_unaryop_expression(p):
     ''' expression : unaryop expression '''
@@ -176,7 +190,7 @@ def p_expression_expression_minus_minus(p):
     '''expression : expression MINUS_MINUS '''
 
 def p_expression_call(p): ##duvida
-    ''' expression : call '''
+    ''' expression : expression ''' #chamada de funcao
 
 def p_expression_literal(p):
     '''expression : literal '''
@@ -185,6 +199,18 @@ def p_expression_primary(p):
     '''expression : primary '''
 
 ### metodo operator ###
+
+ # EXPRESSION : EXPRESSION + EXPRESSION 
+ #              | EXPRESSION * EXPRESSION 
+ #              | ID
+
+# EXPRESSION : EXPRESSION PLUS EXPRESSION_1 
+#              | EXPRESSION_1
+#              |
+ #      EXPRESSION_1    :        EXPRESSION_1 MULT EXPRESSION_2  
+ #                       | EXPRESSION_1 / EXPRESSION_2 
+
+    #    EXPRESION_4 :    
 
 def p_operator_equal(p):
     ''' operator : EQUAL'''
@@ -202,7 +228,6 @@ def p_operator_and(p):
     ''' operator : AND '''
 def p_operator_equal_equal(p):
     '''operator : EQUAL_EQUAL '''
-
 def p_operator_diferent(p):
     '''operator :  DIFFERENT'''
 def p_operator_less_than(p):

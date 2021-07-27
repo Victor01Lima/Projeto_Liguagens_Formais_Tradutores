@@ -67,6 +67,7 @@ tokens = (
     'SHOW',
     'STATIC',
     'STRING',
+    'STRING_LITERAL',
     'SUPER',
     'SWITCH',
     'SYNC',
@@ -187,6 +188,7 @@ t_SET = r'set'
 t_SHOW = r'show'
 t_STATIC = r'static'
 t_STRING = r'String'
+#t_STRING_LITERAL = ''
 t_SUPER = r'super'
 t_SWITCH = r'switch'
 t_SYNC = r'sync'
@@ -221,7 +223,7 @@ t_OPEN_KEYS = r'\{'
 t_CLOSE_KEYS = r'\}'
 t_COMMA = r'\,'
 t_OPEN_PARENTHESES = r'\('
-t_OPEN_PARENTHESES = r'\)'
+t_CLOSE_PARENTHESES = r'\)'
 # OPERADORES RELACIONAIS
 t_EQUAL= r'\='
 t_EQUAL_EQUAL = r'\=\='
@@ -249,8 +251,13 @@ def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
+    
+#def t_STRING_LITERAL_(t):
+ #   r'\' |  ' 
 
-# Define a rule so we can track line numbers
+
+    
+    # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)

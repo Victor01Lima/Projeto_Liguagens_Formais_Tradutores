@@ -101,6 +101,6 @@ primary::= call
      | ID
      |‘(’expression‘)’
 
-literal ::= booleanLiteral
-     | numericLiteral
-     | stringLiteral
+literal ::= booleanLiteral    
+     | numericLiteral         b=5
+     | stringLiteral obs : a=andre

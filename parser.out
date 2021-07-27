@@ -13,6 +13,9 @@ Unused terminals:
     CASE
     CATCH
     CLASS
+    CLOSE_KEYS
+    CLOSE_PARENTHESES
+    COMMA
     CONST
     CONTINUE
     COVARIANT
@@ -21,12 +24,14 @@ Unused terminals:
     DIFFERENT
     DIVIDE
     DIVIDEINT
+    DIVIDE_EQUAL
     DO
     DOUBLE
     DYNAMIC
     ELSE
     ENUM
     EQUAL
+    EQUAL_EQUAL
     EXPORT
     EXPRESS
     EXTENDS
@@ -36,13 +41,13 @@ Unused terminals:
     FALSE
     FINAL
     FINALLY
+    FLOAT
     FOR
     FUNCTION
     GET
     GREATER_THAN
     GREATER_THAN_OR_EQUAL_TO
     HIDE
-    IF
     IMPLEMENTS
     IMPORT
     IN
@@ -58,17 +63,25 @@ Unused terminals:
     LOGIC_OR
     MAP
     MINUS
+    MINUS_EQUAL
+    MINUS_MINUS
     MIXIN
     MULT
+    MULTIPLICATION_DIVISION
     NEW
     NULL
     NUM
     ON
+    OPEN_KEYS
+    OPEN_PARENTHESES
     OPERATOR
     OR
     PART
     PERCENTAGE
-    PLUS
+    PLUS_EQUAL
+    PLUS_PLUS
+    POINT_COMMA
+    POINT_V
     RETHROW
     RETURN
     SET
@@ -77,6 +90,7 @@ Unused terminals:
     SHOW
     STATIC
     STRING
+    STRING_LITERAL
     SUPER
     SWITCH
     SYNC
@@ -96,10 +110,8 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> topLevelDeclaration
-Rule 1     topLevelDeclaration -> functionSignature body
-Rule 2     topLevelDeclaration -> type initializedIdentifierList POINT_V
-Rule 3     topLevelDeclaration -> functionSignature body topLevelDeclaration
-Rule 4     topLevelDeclaration -> type initializedIdentifierList POINT_V topLevelDeclaration
+Rule 1     topLevelDeclaration -> PLUS
+Rule 2     topLevelDeclaration -> IF
 
 Terminals, with rules where they appear
 
@@ -114,6 +126,9 @@ BREAK                :
 CASE                 : 
 CATCH                : 
 CLASS                : 
+CLOSE_KEYS           : 
+CLOSE_PARENTHESES    : 
+COMMA                : 
 CONST                : 
 CONTINUE             : 
 COVARIANT            : 
@@ -122,12 +137,14 @@ DEFERRED             :
 DIFFERENT            : 
 DIVIDE               : 
 DIVIDEINT            : 
+DIVIDE_EQUAL         : 
 DO                   : 
 DOUBLE               : 
 DYNAMIC              : 
 ELSE                 : 
 ENUM                 : 
 EQUAL                : 
+EQUAL_EQUAL          : 
 EXPORT               : 
 EXPRESS              : 
 EXTENDS              : 
@@ -137,13 +154,14 @@ FACTORY              :
 FALSE                : 
 FINAL                : 
 FINALLY              : 
+FLOAT                : 
 FOR                  : 
 FUNCTION             : 
 GET                  : 
 GREATER_THAN         : 
 GREATER_THAN_OR_EQUAL_TO : 
 HIDE                 : 
-IF                   : 
+IF                   : 2
 IMPLEMENTS           : 
 IMPORT               : 
 IN                   : 
@@ -159,18 +177,26 @@ LOGIC_AND            :
 LOGIC_OR             : 
 MAP                  : 
 MINUS                : 
+MINUS_EQUAL          : 
+MINUS_MINUS          : 
 MIXIN                : 
 MULT                 : 
+MULTIPLICATION_DIVISION : 
 NEW                  : 
 NULL                 : 
 NUM                  : 
 ON                   : 
+OPEN_KEYS            : 
+OPEN_PARENTHESES     : 
 OPERATOR             : 
 OR                   : 
 PART                 : 
 PERCENTAGE           : 
-PLUS                 : 
-POINT_V              : 2 4
+PLUS                 : 1
+PLUS_EQUAL           : 
+PLUS_PLUS            : 
+POINT_COMMA          : 
+POINT_V              : 
 RETHROW              : 
 RETURN               : 
 SET                  : 
@@ -179,6 +205,7 @@ SHIFT_RIGHT          :
 SHOW                 : 
 STATIC               : 
 STRING               : 
+STRING_LITERAL       : 
 SUPER                : 
 SWITCH               : 
 SYNC                 : 
@@ -198,9 +225,37 @@ error                :
 
 Nonterminals, with rules where they appear
 
-body                 : 1 3
-functionSignature    : 1 3
-initializedIdentifierList : 2 4
-topLevelDeclaration  : 3 4 0
-type                 : 2 4
+topLevelDeclaration  : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . topLevelDeclaration
+    (1) topLevelDeclaration -> . PLUS
+    (2) topLevelDeclaration -> . IF
+
+    PLUS            shift and go to state 2
+    IF              shift and go to state 3
+
+    topLevelDeclaration            shift and go to state 1
+
+state 1
+
+    (0) S' -> topLevelDeclaration .
+
+
+
+state 2
+
+    (1) topLevelDeclaration -> PLUS .
+
+    $end            reduce using rule 1 (topLevelDeclaration -> PLUS .)
+
+
+state 3
+
+    (2) topLevelDeclaration -> IF .
+
+    $end            reduce using rule 2 (topLevelDeclaration -> IF .)
 
