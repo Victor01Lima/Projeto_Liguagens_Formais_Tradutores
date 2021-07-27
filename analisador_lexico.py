@@ -188,7 +188,6 @@ t_SET = r'set'
 t_SHOW = r'show'
 t_STATIC = r'static'
 t_STRING = r'String'
-#t_STRING_LITERAL = ''
 t_SUPER = r'super'
 t_SWITCH = r'switch'
 t_SYNC = r'sync'
@@ -245,6 +244,17 @@ t_XOR = r'\^'
 t_UNARY_BITWASE_COMPLEMENT = r'\~'
 t_SHIFT_LEFT = r'\<\<'
 t_SHIFT_RIGHT = r'\>\>'
+
+# Dart string
+def t_STRING_LITERAL_DUPLA(t):
+    r'\"(.|\n)*?\"'
+    t.type = "STRING_LITERAL"
+    return t
+
+def t_STRING_LITERAL_SIMPLES(t):
+    r"\'(.|\n)*?\'"
+    t.type = "STRING_LITERAL"
+    return t
 
 # A regular expression rule with some action code
 def t_NUMBER(t):

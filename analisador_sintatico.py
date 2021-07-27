@@ -205,12 +205,32 @@ def p_expression_primary(p):
  #              | ID
 
 # EXPRESSION : EXPRESSION PLUS EXPRESSION_1 
+#              | EXPRESION MINUS EXPRESSION_1
 #              | EXPRESSION_1
-#              |
- #      EXPRESSION_1    :        EXPRESSION_1 MULT EXPRESSION_2  
- #                       | EXPRESSION_1 / EXPRESSION_2 
+# EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2  
+#                       | EXPRESSION_1 / EXPRESSION_2 
 
-    #    EXPRESION_4 :    
+
+def p_expresion_operation(p):
+    '''
+       EXPRESSION : EXPRESSION PLUS EXPRESSION_1  
+                    | EXPRESION MINUS EXPRESSION_1
+                    | EXPRESION PERCENTAGE EXPRESSION_1
+                    | EXPRESION
+        EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2
+                    | EXPRESION_1 DIVIDE EXPRESSION_2
+                    | EXPRESION_2
+        EXPRESSION_2 :  EXPRESION_2 GREATER_THAN EXPRESSION_3
+                    | EXPRESION_2 LESS_THAN EXPRESSION_3
+                    | EXPRESION_2 GREATER_THAN_OR_EQUAL_TO EXPRESSION_3
+                    | EXPRESION_2 LESS_THAN_OR_EQUAL_TO EXPRESSION_3
+                    | EXPRESION_2 EQUAL_EQUAL EXPRESSION_3
+                    | EXPRESION_2 DIFFERENT EXPRESSION_3
+                    | EXPRESION_3
+        EXPRESSION_3 : EXPRESSION_3 OR EXPRESSION_4
+                    | EXPRESION_3 AND EXPRESSION_4
+                    | EXPRESION_4
+    '''   
 
 def p_operator_equal(p):
     ''' operator : EQUAL'''
@@ -222,22 +242,6 @@ def p_operator_plus_equal(p):
     '''operator : PLUS_EQUAL'''
 def p_operator_minus_equal(p):
     '''operator : MINUS_EQUAL '''
-def p_operator_or (p):
-    ''' operator : OR'''
-def p_operator_and(p):
-    ''' operator : AND '''
-def p_operator_equal_equal(p):
-    '''operator : EQUAL_EQUAL '''
-def p_operator_diferent(p):
-    '''operator :  DIFFERENT'''
-def p_operator_less_than(p):
-    ''' operator : LESS_THAN '''
-def p_operator_greater_than(p):
-    '''operator : GREATER_THAN '''
-def p_operator_greater_than_or_equal_to(p):
-    ''' operator : GREATER_THAN_OR_EQUAL_TO '''
-def p_operator_less_than_or_equal_to(p):
-    ''' operator : LESS_THAN_OR_EQUAL_TO'''
 def p_operator_logic_or(p):
     '''operator : LOGIC_OR '''
 def p_operator_logic_and(p):
@@ -246,16 +250,6 @@ def p_operator_shift_left(p):
     '''operator : SHIFT_LEFT'''
 def p_operator_shift_right(p):
     '''operator : SHIFT_RIGHT'''
-def p_operator_plus(p):
-    ''' operator : PLUS'''
-def p_operator_minus(p):
-    ''' operator : MINUS'''
-def p_operator_mult(p):
-    '''operator : MULT'''
-def p_operator_divide(p):
-    ''' operator : DIVIDE'''
-def p_operator_percentage(p):
-    '''operator : PERCENTAGE'''
 
 ### metodo primary ###
 def p_primary_call(p):
