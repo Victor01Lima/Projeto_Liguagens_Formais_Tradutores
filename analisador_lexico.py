@@ -7,82 +7,84 @@
 # Author Victor da Luz Lima, Jose Nathanel e Davi de jesus
 import ply.lex as lex
 
-# List of token names.   This is always required
-tokens = (
-
+reserved = {
     #PALAVRAS RESERVADAS
-    'ABSTRACT',
-    'AS',
-    'ASSERT',
-    'ASYNC',
-    'AWAIT',
-    'BREAK',
-    'BOOL',
-    'CASE',
-    'CATCH',
-    'CLASS',
-    'CONST',
-    'CONTINUE',
-    'COVARIANT',
-    'DEFAULT',
-    'DEFERRED',
-    'DO',
-    'DOUBLE',
-    'DYNAMIC',
-    'ELSE',
-    'ENUM',
-    'EXPORT',
-    'EXTENDS',
-    'EXTENSION',
-    'EXTERNAL',
-    'FACTORY',
-    'FALSE',
-    'FINAL',
-    'FLOAT',
-    'FINALLY',
-    'FOR',
-    'FUNCTION',
-    'GET',
-    'HIDE',
-    'IF',
-    'IMPLEMENTS',
-    'IMPORT',
-    'IN',
-    'INT',
-    'INTERFACE',
-    'IS',
-    'LIBRARY',
-    'LIST',
-    'MAP',
-    'MIXIN',
-    'NEW',
-    'NULL',
-    'NUM',
-    'ON',
-    'OPERATOR',
-    'PART',
-    'RETHROW',
-    'RETURN',
-    'SET',
-    'SHOW',
-    'STATIC',
-    'STRING',
-    'STRING_LITERAL',
-    'SUPER',
-    'SWITCH',
-    'SYNC',
-    'THIS',
-    'THROW',
-    'TRUE',
-    'TRY',
-    'TYPEDEF',
-    'VAR',
-    'VOID',
-    'WHILE',
-    'WITH',
-    'YIELD',
-    'POINT_V',
+    'abstract' : 'ABSTRACT',
+    'as' : 'AS',
+    'assert' : 'ASSERT',
+    'async' : 'ASYNC',
+    'await' : 'AWAIT',
+    'break' : 'BREAK',
+    'bool' : 'BOOL',
+    'case' : 'CASE',
+    'catch' : 'CATCH',
+    'class' : 'CLASS',
+    'const' : 'CONST',
+    'continue' : 'CONTINUE',
+    'covariant' : 'COVARIANT',
+    'default' : 'DEFAULT',
+    'deferred' : 'DEFERRED',
+    'do' : 'DO',
+    'double' : 'DOUBLE',
+    'dynamic' : 'DYNAMIC',
+    'else' : 'ELSE',
+    'enum' : 'ENUM',
+    'export' : 'EXPORT',
+    'extends' : 'EXTENDS',
+    'extension' : 'EXTENSION',
+    'external' : 'EXTERNAL',
+    'factory' : 'FACTORY',
+    'false' : 'FALSE',
+    'final' : 'FINAL',
+    'float' : 'FLOAT',
+    'finally' : 'FINALLY',
+    'for' : 'FOR',
+    'function' : 'FUNCTION',
+    'get' : 'GET',
+    'hide' : 'HIDE',
+    'id' : 'ID',
+    'if' : 'IF',
+    'implements' : 'IMPLEMENTS',
+    'import' : 'IMPORT',
+    'in' : 'IN',
+    'int' : 'INT',
+    'interface' : 'INTERFACE',
+    'is' : 'IS',
+    'library' : 'LIBRARY',
+    'list' : 'LIST',
+    'map' : 'MAP',
+    'mixin' : 'MIXIN',
+    'new' : 'NEW',
+    'null' : 'NULL',
+    'num' : 'NUM',
+    'on' : 'ON',
+    'operator' : 'OPERATOR',
+    'part' : 'PART',
+    'rethrow' : 'RETHROW',
+    'return' : 'RETURN',
+    'set' : 'SET',
+    'show' : 'SHOW',
+    'static' : 'STATIC',
+    'string' : 'STRING',
+    'string_literal' : 'STRING_LITERAL',
+    'super' : 'SUPER',
+    'switch' : 'SWITCH',
+    'sync' : 'SYNC',
+    'this' : 'THIS',
+    'throw' : 'THROW',
+    'true' : 'TRUE',
+    'try' : 'TRY',
+    'typedef' : 'TYPEDEF',
+    'var' : 'VAR',
+    'void' : 'VOID',
+    'while' : 'WHILE',
+    'with' : 'WITH',
+    'yeld' : 'YIELD',
+    'point_v' : 'POINT_V'
+}
 
+# List of token names.   This is always required
+tokens = [
     #OPERADORES ARITIMETICOS
     'MULTIPLICATION_DIVISION',
     'PLUS_PLUS',
@@ -109,6 +111,8 @@ tokens = (
     'CLOSE_PARENTHESES',
     'OPEN_KEYS',
     'CLOSE_KEYS',
+    'CLOSE_CONCHETE',
+    'OPEN_CONCHETE',
     # OPERADORES RELACIONAIS
     'EQUAL',
     'EQUAL_EQUAL',
@@ -117,7 +121,6 @@ tokens = (
     'LESS_THAN',
     'GREATER_THAN_OR_EQUAL_TO',
     'LESS_THAN_OR_EQUAL_TO',
-
     #BIT TO BIT
     'AND',
     'OR',
@@ -125,7 +128,7 @@ tokens = (
     'UNARY_BITWASE_COMPLEMENT',
     'SHIFT_LEFT',
     'SHIFT_RIGHT',
-)
+] + list(reserved.values())
 
 # Regular expression rules for simple tokens
 
@@ -223,6 +226,8 @@ t_CLOSE_KEYS = r'\}'
 t_COMMA = r'\,'
 t_OPEN_PARENTHESES = r'\('
 t_CLOSE_PARENTHESES = r'\)'
+t_OPEN_CONCHETE = r'\['
+t_CLOSE_CONCHETE = r'\]'
 # OPERADORES RELACIONAIS
 t_EQUAL= r'\='
 t_EQUAL_EQUAL = r'\=\='
@@ -256,16 +261,16 @@ def t_STRING_LITERAL_SIMPLES(t):
     t.type = "STRING_LITERAL"
     return t
 
+def t_ID(t):
+     r'[a-zA-Z_][a-zA-Z_0-9]*'
+     t.type = reserved.get(t.value,'ID')    # Check for reserved words
+     return t
+
 # A regular expression rule with some action code
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
-    
-#def t_STRING_LITERAL_(t):
- #   r'\' |  ' 
-
-
     
     # Define a rule so we can track line numbers
 def t_newline(t):

@@ -2,8 +2,6 @@ import ply.lex as lex
 from analisador_lexico import tokens
 import ply.yacc as yacc
 
-
-
 ### Metodo topLevelDeclaration ###    
 def p_topLevelDeclaration_functionSignature(p):
     '''topLevelDeclaration : functionSignature body'''
@@ -22,8 +20,10 @@ def p_initializedIdentifierList(p): #duvida aqui
    ''' initializedIdentifierList : ID EQUAL expression '(' ID EQUAL expression '''
 
 ### Metodo FunctionSignature ###
-def p_functionSignature (p): #duvida aqui
-    ''' functionSignature : type ?  ID formalParameterPart'''
+def p_functionSignature (p):
+    ''' functionSignature : type ID formalParameterPart
+                        | ID formalParameterPart
+    '''
 
 ### Metodo type ###
 def p_type_VOID(p):
@@ -110,6 +110,7 @@ def p_localVariableDeclaration(p): #duvida
                                 | type ID EQUAL expression  COMMA ID  POINT_COMMA
                                 | type ID  COMMA ID  POINT_COMMA
     '''
+
 def p_expression_one_equal(p):
    ''' expression_one_equal : COMMA ID  EQUAL expression 
                             | COMMA ID
@@ -125,13 +126,23 @@ def p_forStatement_body(p):
 
 ### metodo forLoopParts ###
 def p_forLoopParts_localVariableDeclaration(p):
-    '''forLoopparts : localVariableDeclaration POINT_COMMA (expression)? POINT_COMMA (expressionList)? '''
+    '''forLoopparts : localVariableDeclaration POINT_COMMA expression POINT_COMMA expressionList
+                    | localVariableDeclaration POINT_COMMA POINT_COMMA expressionList
+                    | localVariableDeclaration POINT_COMMA expression POINT_COMMA
+                    | localVariableDeclaration POINT_COMMA POINT_COMMA
+    '''
 
 def p_forLoopParts_expression(p):
-    '''forLoopparts : expression POINT_COMMA (expression)? POINT_COMMA (expressionList)? '''
+    '''forLoopparts : expression POINT_COMMA expression POINT_COMMA expressionList
+                    | expression POINT_COMMA POINT_COMMA expressionList
+                    | expression POINT_COMMA expression POINT_COMMA
+                    | expression POINT_COMMA POINT_COMMA
+    '''
 
 def p_forLoopParts_type(p):
-    '''forLoopParts : type? ID IN expression'''
+    '''forLoopParts : type ID IN expression
+                    | ID IN expression
+    '''
 
 ### Metodo expressionList ###
 def p_expressionList_expression(p):
@@ -149,13 +160,14 @@ def p_whileStatement_body(p):
 
 ### Metodo ifStatement ###
 def p_ifStatement_statement_else_statement(p):
-    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE statement? '''
+    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE statement 
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE
+    '''
 
 def p_ifStatement_body_else_body(p):
-    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body? '''
-
-def p_ifStatement_statement_else_body(p):
-    ''' ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE statement ?'''
+    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body 
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE
+    '''
 
 ### Metodo breakStatement ###
 def p_breakStatement(p):
@@ -167,112 +179,121 @@ def p_continueStatement(p):
 
 ### Metodo returnStatement ###
 def p_returnStatement(p):
-    '''returnStatement : RETURN expression? POINT_COMMA '''
-
-### Metodo expressionStatement ###
-def p_expressionStatement(p):
-    '''returnStatement : expressionStatement : expression? POINT_COMMA ''' #CRIAR NOVA REGRA SEM EXPRESSION
-
-### Metodo expression ###
-def p_expression_expression_operator_expression(p):
-    ''' expression : expression operator expression''' #obs
-      #  expression : expression operator expression_1
-      #  expression1 :
-      #
-
-def p_expression_unaryop_expression(p):
-    ''' expression : unaryop expression '''
-
-def p_expression_expression_plus_plus(p):
-    ''' expression : expression PLUS_PLUS '''
-
-def p_expression_expression_minus_minus(p):
-    '''expression : expression MINUS_MINUS '''
-
-def p_expression_call(p): ##duvida
-    ''' expression : expression ''' #chamada de funcao
-
-def p_expression_literal(p):
-    '''expression : literal '''
-
-def p_expression_primary(p):
-    '''expression : primary '''
-
-### metodo operator ###
-
- # EXPRESSION : EXPRESSION + EXPRESSION 
- #              | EXPRESSION * EXPRESSION 
- #              | ID
-
-# EXPRESSION : EXPRESSION PLUS EXPRESSION_1 
-#              | EXPRESION MINUS EXPRESSION_1
-#              | EXPRESSION_1
-# EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2  
-#                       | EXPRESSION_1 / EXPRESSION_2 
-
-
-def p_expresion_operation(p):
+    '''returnStatement : RETURN expression POINT_COMMA 
+                        | RETURN POINT_COMMA
     '''
-       EXPRESSION : EXPRESSION PLUS EXPRESSION_1  
-                    | EXPRESION MINUS EXPRESSION_1
-                    | EXPRESION PERCENTAGE EXPRESSION_1
-                    | EXPRESION
-        EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2
-                    | EXPRESION_1 DIVIDE EXPRESSION_2
-                    | EXPRESION_2
-        EXPRESSION_2 :  EXPRESION_2 GREATER_THAN EXPRESSION_3
-                    | EXPRESION_2 LESS_THAN EXPRESSION_3
-                    | EXPRESION_2 GREATER_THAN_OR_EQUAL_TO EXPRESSION_3
-                    | EXPRESION_2 LESS_THAN_OR_EQUAL_TO EXPRESSION_3
-                    | EXPRESION_2 EQUAL_EQUAL EXPRESSION_3
-                    | EXPRESION_2 DIFFERENT EXPRESSION_3
-                    | EXPRESION_3
-        EXPRESSION_3 : EXPRESSION_3 OR EXPRESSION_4
-                    | EXPRESION_3 AND EXPRESSION_4
-                    | EXPRESION_4
+
+def p_expressionStatement(p):
+    '''returnStatement : expression POINT_COMMA 
+                        | POINT_COMMA
+    '''
+
+def p_expression(p):
+    '''
+        expression : expression EQUAL expression_0
+                    | expression PLUS_EQUAL expression_0
+                    | expression MINUS_EQUAL expression_0
+                    | expression MULTIPLICATION_DIVISION expression_0
+                    | expression DIVIDE_EQUAL expression_0
+                    | expression_0
+    '''
+
+def p_expression_0(p):
+    '''
+        expression_0 : expression_0 OR expression_1
+                    | expression_1
+    ''' 
+
+def p_expression_1(p):
+    '''
+        expression_1 : expression_1 AND expression_2
+                    | expression_2
+    '''
+
+def p_expression_2(p):
+    '''
+        expression_2 :  expression_2 EQUAL_EQUAL expression_3
+                    | expression_2 DIFFERENT expression_3
+                    | expression_3
+    '''
+
+def p_expression_3(p):
+    '''
+        expression_3 :  expression_3 EQUAL_EQUAL expression_4
+                    | expression_3 DIFFERENT expression_4
+                    | expression_4
+    '''
+
+def p_expression_4(p):
+    '''
+        expression_4 : expression_4 t_LESS_THAN expression_5
+                    | expression_4 GREATER_THAN expression_5
+                    | expression_4 LESS_THAN_OR_EQUAL_TO expression_5
+                    | expression_4 GREATER_THAN_OR_EQUAL_TO expression_5
+                    | expression_5
     '''   
 
-def p_operator_equal(p):
-    ''' operator : EQUAL'''
-def p_operator_multiplication_division(p):
-    ''' operator : MULTIPLICATION_DIVISION'''
-def p_operator_division_equal(p):
-    ''' operator : DIVIDE_EQUAL'''
-def p_operator_plus_equal(p):
-    '''operator : PLUS_EQUAL'''
-def p_operator_minus_equal(p):
-    '''operator : MINUS_EQUAL '''
-def p_operator_logic_or(p):
-    '''operator : LOGIC_OR '''
-def p_operator_logic_and(p):
-    '''operator : LOGIC_AND'''
-def p_operator_shift_left(p):
-    '''operator : SHIFT_LEFT'''
-def p_operator_shift_right(p):
-    '''operator : SHIFT_RIGHT'''
+def p_expression_5(p):
+    ''' 
+        expression_5 :  expression_5 LOGIC_OR expression_6
+                    | expression_6
+    '''
 
-### metodo primary ###
-def p_primary_call(p):
-    ''' primary : call '''
+def p_expression_6(p):
+    ''' 
+        expression_6 :  expression_6 LOGIC_AND expression_7
+                    | expression_7
+    '''
 
-def p_primary_literal(p):
-    ''' primary : literal '''
-def p_primary_ID(p):
-    ''' primary : ID '''
-def p_primary_expression(p):
-    ''' primary :   OPEN_PARENTHESES expression CLOSE_PARENTHESES '''
+def p_expression_7(p):
+    ''' 
+        expression_7 :  expression_7 SHIFT_LEFT expression_8
+                    | expression_7 SHIFT_RIGHT expression_8
+                    | expression_8
+    '''
 
+def p_expression_8(p):
+    '''
+       expression_8 : expression_8 PLUS expression_9
+                    | expression_8 MINUS expression_9
+                    | expression_9
+    '''
 
-### metodo literal ### Duvida++
-def p_literal_booleanLiteral(p):
-    ''' literal : booleanLiteral '''
+def p_expression_9(p):
+    '''
+        expression_9 : expression_9 MULT expression_10
+                    | expression_9 PERCENTAGE expression_10
+                    | expression_9 DIVIDE expression_10
+                    | expression_10
+    '''
 
-def p_literal_numericLiteral(p):
-    '''  literal : numericLiteral '''
+def p_expression_10(p):
+    '''
+        expression_10 : MINUS expression_10
+                    | PLUS_PLUS expression_10
+                    | MINUS_MINUS expression_10
+                    | INVERT expression_10
+                    | expression_11
+    '''
 
-def p_literal_stringLiteral(p):
-    ''' literal : stringLiteral '''
+def p_expression_11(p):
+    '''
+        expression_11 : expression_11 MINUS_MINUS
+                    | expression_11 PLUS_PLUS
+                    | expression_11 OPEN_CONCHETE expression_11 CLOSE_CONCHETE
+                    | OPEN_PARENTHESES expression CLOSE_PARENTHESES
+                    | expression_12
+    '''
+
+def p_expression_12(p):
+    '''
+        expression_12 : ID 
+                    | STRING_LITERAL 
+                    | NUMBER_LITERAL 
+                    | BOOLEAN_LITERAL 
+                    | ID OPEN_PARENTHESES ARGS CLOSE_PARANTHESES 
+    '''
+
 parser = yacc.yacc()
-
 
 parser.parse()

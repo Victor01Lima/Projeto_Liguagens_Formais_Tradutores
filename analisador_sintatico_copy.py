@@ -171,7 +171,7 @@ def p_returnStatement(p):
 
 ### Metodo expressionStatement ###
 def p_expressionStatement(p):
-    '''returnStatement : expressionStatement : expression? POINT_COMMA ''' #CRIAR NOVA REGRA SEM EXPRESSION
+    '''returnStatement : expressionStatement : expression? POINT_COMMA ''' #CRIAR NOVA REGRA SEM expression
 
 ### Metodo expression ###
 def p_expression_expression_operator_expression(p):
@@ -200,28 +200,28 @@ def p_expression_primary(p):
 
 ### metodo operator ###
 
- # EXPRESSION : EXPRESSION + EXPRESSION 
- #              | EXPRESSION * EXPRESSION 
+ # expression : expression + expression 
+ #              | expression * expression 
  #              | ID
 
-# EXPRESSION : EXPRESSION PLUS EXPRESSION_1 
-#              | EXPRESION MINUS EXPRESSION_1
-#              | EXPRESSION_1
-# EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2  
-#                       | EXPRESSION_1 / EXPRESSION_2 
+# expression : expression PLUS expression_1 
+#              | expression MINUS expression_1
+#              | expression_1
+# expression_1 : expression_1 MULT expression_2  
+#                       | expression_1 / expression_2 
 
-    #    EXPRESION_4 : 
+    #    expression_4 : 
     # 
 
-def p_expresion_operation(p):
+def p_expression_operation(p):
     '''
-       EXPRESSION : EXPRESSION PLUS EXPRESSION_1  
-                    | EXPRESION MINUS EXPRESSION_1
-                    | EXPRESION
-        EXPRESSION_1 : EXPRESSION_1 MULT EXPRESSION_2
-                    | EXPRESION_1 DIVIDE EXPRESSION_2
-                    | EXPRESION_2
-        EXPRESSION_2 : 
+       expression : expression PLUS expression_1  
+                    | expression MINUS expression_1
+                    | expression
+        expression_1 : expression_1 MULT expression_2
+                    | expression_1 DIVIDE expression_2
+                    | expression_2
+        expression_2 : 
     '''   
 
 def p_operator_equal(p):
