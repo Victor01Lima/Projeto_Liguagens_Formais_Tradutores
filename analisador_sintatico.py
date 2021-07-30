@@ -110,17 +110,17 @@ def p_statement_expressionStatement(p):
 
 ### Metodo localVariableDeclaration ###
 def p_localVariableDeclaration(p): #duvida
-    '''localVariableDeclaration : type ID EQUAL expression expression_one_equal POINT_COMMA
-                                | type ID  expression_one_equal POINT_COMMA 
+    '''localVariableDeclaration : type ID EQUAL expression expression_one_equal
+                                | type ID  expression_one_equal 
                                 | type ID EQUAL expression  COMMA ID  POINT_COMMA
                                 | type ID  COMMA ID  POINT_COMMA
     '''
 
 def p_expression_one_equal(p):
-   ''' expression_one_equal : COMMA ID  EQUAL expression 
-                            | COMMA ID
-                            | COMMA ID  EQUAL expression expression_one_equal
-                            | COMMA ID expression_one_equal'''
+   ''' expression_one_equal : COMMA ID  EQUAL expression POINT_COMMA
+                            | COMMA ID POINT_COMMA
+                            | COMMA ID  EQUAL expression expression_one_equal POINT_COMMA
+                            | COMMA ID expression_one_equal POINT_COMMA'''
     
 ### Metodo forStatement ###
 def p_forStatement_statement(p):
