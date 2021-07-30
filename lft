@@ -1,6 +1,0 @@
-# C string
- def t_ccode_string(t):
-    r'\"([^\\\n]|(\\.))*?\"'
-
- # C character literal
- def t_ccode_char(t):

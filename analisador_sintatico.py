@@ -17,8 +17,13 @@ def p_topLevelDeclaration_type_initializedIdentifierList_POINT_V_topLevelDeclara
 
 ### Metodo initializedIdentifierList ###
 def p_initializedIdentifierList(p): #duvida aqui
-   ''' initializedIdentifierList : ID EQUAL expression '(' ID EQUAL expression '''
+   ''' initializedIdentifierList : ID EQUAL expression p_initializedIdentifierList_estrela 
+'''
 
+def p_initializedIdentifierList_estrela(p):
+    ''' p_initializedIdentifierList_estrela : COMMA ID EQUAL expression
+                            | COMMA ID EQUAL expression  p_initializedIdentifierList_estrela
+    '''
 ### Metodo FunctionSignature ###
 def p_functionSignature (p):
     ''' functionSignature : type ID formalParameterPart
@@ -54,9 +59,13 @@ def p_formalParameterList_normalFormal_Parameters(p):
 '''
 
 ### Metodo normalFormalParameters ###
-def p_normalFormalParameters(p): ###DUVIDA
-    '''normalFormalParameters : normalFormalParameter OPEN_PARENTHESES COMMA normalFormalParameter CLOSE_PARENTHESES  '''
-
+def p_normalFormalParameters(p): 
+    '''normalFormalParameters : normalFormalParameter  p_normalFormalParameters_estrela'''
+def p_normalFormalParameters_estrela(p):
+    ''' 
+        p_normalFormalParameters_estrela : COMMA normalFormalParameter
+                                 | COMMA normalFormalParameter p_normalFormalParameters_estrela
+    '''
 ### Metodo normalFormalParameter ###
 def p_normalFormalParameter(p):
     '''normalFormalParameter : type ID '''
@@ -69,7 +78,7 @@ def p_body__(p):
     '''body :  OPEN_KEYS CLOSE_KEYS'''
 
 ### Metodo statements ###
-def p_statements_statements_statement(p):
+def p_statements_statements_statement(p):  ## resolver recurssão
     '''statements : statements statement '''
 
 def p_statements_statement(p):
@@ -161,13 +170,17 @@ def p_whileStatement_body(p):
 ### Metodo ifStatement ###
 def p_ifStatement_statement_else_statement(p):
     '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE statement 
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE body
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement 
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body 
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE statement
     '''
 
-def p_ifStatement_body_else_body(p):
-    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body 
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE
-    '''
+#def p_ifStatement_body_else_body(p):
+#    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body 
+#                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE
+#    '''
 
 ### Metodo breakStatement ###
 def p_breakStatement(p):
@@ -179,7 +192,7 @@ def p_continueStatement(p):
 
 ### Metodo returnStatement ###
 def p_returnStatement(p):
-    '''returnStatement : RETURN expression POINT_COMMA 
+    '''expressionStatement : RETURN expression POINT_COMMA 
                         | RETURN POINT_COMMA
     '''
 
@@ -226,7 +239,7 @@ def p_expression_3(p):
 
 def p_expression_4(p):
     '''
-        expression_4 : expression_4 t_LESS_THAN expression_5
+        expression_4 : expression_4 LESS_THAN expression_5
                     | expression_4 GREATER_THAN expression_5
                     | expression_4 LESS_THAN_OR_EQUAL_TO expression_5
                     | expression_4 GREATER_THAN_OR_EQUAL_TO expression_5
@@ -285,13 +298,13 @@ def p_expression_11(p):
                     | expression_12
     '''
 
-def p_expression_12(p):
+def p_expression_12(p): #fazer metodo number_literal # fazer metodo boolean
     '''
         expression_12 : ID 
                     | STRING_LITERAL 
-                    | NUMBER_LITERAL 
-                    | BOOLEAN_LITERAL 
-                    | ID OPEN_PARENTHESES ARGS CLOSE_PARANTHESES 
+                    | NUMBER  
+                    | BOOL
+                    | ID OPEN_PARENTHESES normalFormalParameter CLOSE_PARENTHESES 
     '''
 
 parser = yacc.yacc()

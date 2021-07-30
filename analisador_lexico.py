@@ -90,6 +90,7 @@ tokens = [
     'PLUS_PLUS',
     'PLUS',
     'MINUS',
+    'NUMBER',
     'MINUS_MINUS',
     'EXPRESS',
     'MULT',
@@ -270,8 +271,8 @@ def t_ID(t):
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
+    t.type = "NUMBER"
     return t
-    
     # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
