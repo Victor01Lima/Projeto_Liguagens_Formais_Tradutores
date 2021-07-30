@@ -26,8 +26,8 @@ def p_initializedIdentifierList_estrela(p):
     '''
 ### Metodo FunctionSignature ###
 def p_functionSignature (p):
-    ''' functionSignature : type ID formalParameterPart
-                        | ID formalParameterPart
+    ''' functionSignature : type ID formalParameterList
+                        | ID formalParameterList
     '''
 
 ### Metodo type ###
@@ -44,9 +44,7 @@ def p_type_FLOAT(p):
 def p_type_VAR(p):
     '''type : VAR'''
 
-### Metodo formalParameterPart ###
-def p_formalParameterPart(p):
-    '''formalParameterPart  :  formalParameterList '''
+
 
 ### Metodo formalParameterList ###
 def p_formalParameterList_void_(p):
@@ -60,12 +58,10 @@ def p_formalParameterList_normalFormal_Parameters(p):
 
 ### Metodo normalFormalParameters ###
 def p_normalFormalParameters(p): 
-    '''normalFormalParameters : normalFormalParameter  p_normalFormalParameters_estrela'''
-def p_normalFormalParameters_estrela(p):
-    ''' 
-        p_normalFormalParameters_estrela : COMMA normalFormalParameter
-                                 | COMMA normalFormalParameter p_normalFormalParameters_estrela
+    '''normalFormalParameters : normalFormalParameter  
+                            | normalFormalParameters COMMA normalFormalParameter
     '''
+
 ### Metodo normalFormalParameter ###
 def p_normalFormalParameter(p):
     '''normalFormalParameter : type ID '''
@@ -85,8 +81,8 @@ def p_statements_statement(p):
     '''statements : statement '''
 
 ### Metodo statement ###
-def p_statement_body(p):
-    ''' statement : body '''
+#def p_statement_body(p):
+#    ''' statement : body '''
 
 def p_statement_localVariableDeclaration(p):
     '''statement : localVariableDeclaration '''
@@ -135,14 +131,14 @@ def p_forStatement_body(p):
 
 ### metodo forLoopParts ###
 def p_forLoopParts_localVariableDeclaration(p):
-    '''forLoopparts : localVariableDeclaration POINT_COMMA expression POINT_COMMA expressionList
+    '''forLoopParts : localVariableDeclaration POINT_COMMA expression POINT_COMMA expressionList
                     | localVariableDeclaration POINT_COMMA POINT_COMMA expressionList
                     | localVariableDeclaration POINT_COMMA expression POINT_COMMA
                     | localVariableDeclaration POINT_COMMA POINT_COMMA
     '''
 
 def p_forLoopParts_expression(p):
-    '''forLoopparts : expression POINT_COMMA expression POINT_COMMA expressionList
+    '''forLoopParts : expression POINT_COMMA expression POINT_COMMA expressionList
                     | expression POINT_COMMA POINT_COMMA expressionList
                     | expression POINT_COMMA expression POINT_COMMA
                     | expression POINT_COMMA POINT_COMMA
@@ -219,16 +215,10 @@ def p_expression_0(p):
 
 def p_expression_1(p):
     '''
-        expression_1 : expression_1 AND expression_2
-                    | expression_2
-    '''
-
-def p_expression_2(p):
-    '''
-        expression_2 :  expression_2 EQUAL_EQUAL expression_3
-                    | expression_2 DIFFERENT expression_3
+        expression_1 : expression_1 AND expression_3
                     | expression_3
     '''
+
 
 def p_expression_3(p):
     '''
@@ -303,7 +293,8 @@ def p_expression_12(p): #fazer metodo number_literal # fazer metodo boolean
         expression_12 : ID 
                     | STRING_LITERAL 
                     | NUMBER  
-                    | BOOL
+                    | TRUE 
+                    | FALSE
                     | ID OPEN_PARENTHESES normalFormalParameter CLOSE_PARENTHESES 
     '''
 
