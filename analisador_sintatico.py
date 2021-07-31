@@ -80,33 +80,36 @@ def p_statements_statements_statement(p):  ## resolver recurssão
 def p_statements_statement(p):
     '''statements : statement '''
 
-### Metodo statement ###
-#def p_statement_body(p):
-#    ''' statement : body '''
 
 def p_statement_localVariableDeclaration(p):
-    '''statement : localVariableDeclaration '''
+    '''statement_1 : localVariableDeclaration '''
 
-def p_statement_forStatement(p):
-    ''' statement : forStatement '''
+def p_statement_1(p):
+    '''
+        statement : statement_1
+                  | statement_2 
 
-def p_statement_whileStatement(p):
-    '''statement : whileStatement '''
+     '''
+def p_statement_1_forStatement(p):
+    ''' statement_1 : forStatement '''
 
-def p_statement_ifStatement(p):
-    ''' statement : ifStatement '''
+def p_statement_1_whileStatement(p):
+    '''statement_1 : whileStatement '''
 
-def p_statement_breakStatement(p):
-    ''' statement : breakStatement'''
+#def p_statement_1_ifStatement(p):
+#    ''' statement_1 : ifStatement '''
 
-def p_statement_continueStatement(p):
-    ''' statement : continueStatement'''
+def p_statement_1_breakStatement(p):
+    ''' statement_1 : breakStatement'''
 
-def p_statement_returnStatement(p):
-    ''' statement : returnStatement'''
+def p_statement_1_continueStatement(p):
+    ''' statement_1 : continueStatement'''
 
-def p_statement_expressionStatement(p):
-    ''' statement : expressionStatement'''
+def p_statement_1_returnStatement(p):
+    ''' statement_1 : returnStatement'''
+
+def p_statement_1_expressionStatement(p):
+    ''' statement_1 : expressionStatement'''
 
 ### Metodo localVariableDeclaration ###
 def p_localVariableDeclaration(p): #duvida
@@ -161,21 +164,26 @@ def p_whileStatement_statement(p):
 
 def p_whileStatement_body(p):
     ''' whileStatement :  WHILE OPEN_PARENTHESES expression CLOSE_PARENTHESES body '''
-
-### Metodo ifStatement ###
-def p_ifStatement_statement_else_statement(p):
-    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE statement 
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE body
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement 
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body 
-                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE statement
+# A PARTIR  DAQUI
+### Metodo ifStatement ### 
+#def p_ifStatement_statement_else_statement(p):
+#    '''statement_1 :  IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE statement
+#                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE body 
+#    '''
+# IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement ELSE body 
+#
+#IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body
+#                       | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body 
+def p_ifStatement_1(p):
+    '''
+        statement_1 :   IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement_1 ELSE statement_1 
+    '''
+def p_ifStatement_2(p):
+    '''
+        statement_2 : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement
+                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES statement_1 ELSE statement_2 
     '''
 
-#def p_ifStatement_body_else_body(p):
-#    '''ifStatement : IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE body 
-#                    | IF OPEN_PARENTHESES expression CLOSE_PARENTHESES body ELSE
-#    '''
 
 ### Metodo breakStatement ###
 def p_breakStatement(p):
