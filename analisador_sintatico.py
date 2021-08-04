@@ -1,34 +1,53 @@
-import ply.lex as lex
-from analisador_lexico import tokens
+
 import ply.yacc as yacc
+
+import ply.lex as lex
+from analisador_lexico import *
+
+import sintaxe_abstrata as sa
+import Visitor as vis
+
 
 ### Metodo topLevelDeclaration ###    
 def p_topLevelDeclaration_functionSignature(p):
     '''topLevelDeclaration : functionSignature body'''
+    p[0] = sa.TopLevelDeclFuncSignConcrete(p[1], p[2])
 
 def p_topLevelDeclaration_type_initializedIdentifierList_POINT_V(p):
     '''topLevelDeclaration : type initializedIdentifierList POINT_V'''
+    p[0] = sa.TopLevelDeclTypeInitIdentifierListPointVConcrete(p[1], p[2])
 
 def p_topLevelDeclaration_functionSignature_body_topLevelDeclaration(p):
     ''' topLevelDeclaration : functionSignature body topLevelDeclaration'''
+    p[0] = sa.TopLevelDeclFunctSignBodyTopLevelDeclConcrete(p[1], p[2], p[3])
 
 def p_topLevelDeclaration_type_initializedIdentifierList_POINT_V_topLevelDeclaration(p):
     '''topLevelDeclaration : type initializedIdentifierList  POINT_V  topLevelDeclaration'''
+    p[0] = sa.TopLevelDeclTypeInitIdentifierListPointvTopLevelDeclConcrete(p[1], p[2], p[4])
 
 ### Metodo initializedIdentifierList ###
 def p_initializedIdentifierList(p): #duvida aqui
-   ''' initializedIdentifierList : ID EQUAL expression p_initializedIdentifierList_estrela 
-'''
+   ''' initializedIdentifierList : ID EQUAL expression p_initializedIdentifierList_estrela'''
+   p[0] = sa.InitializedIdentifierListConcrete(p[1], p[3], p[4])
 
 def p_initializedIdentifierList_estrela(p):
     ''' p_initializedIdentifierList_estrela : COMMA ID EQUAL expression
                             | COMMA ID EQUAL expression  p_initializedIdentifierList_estrela
     '''
+    if (len(p) == 2):
+        p[0] = sa.InitializedIdentifierListEstrelaSingleConcrete(p[2], p[4])
+    else:
+        p[0] = sa.InitializedIdentifierListEstrelaCompoundConcrete(p[2], p[4], p[5])
+
 ### Metodo FunctionSignature ###
 def p_functionSignature (p):
     ''' functionSignature : type ID formalParameterList
                         | ID formalParameterList
     '''
+    if(len(p) == 2):
+        p[0] = sa.FunctionSignatureConcrete(p[1], p[2], p[3])
+    else:
+        p[0] = sa.FunctionSignature2Concrete(p[1], p[2])
 
 ### Metodo type ###
 def p_type_VOID(p):
@@ -43,7 +62,6 @@ def p_type_FLOAT(p):
     '''type : FLOAT'''
 def p_type_VAR(p):
     '''type : VAR'''
-
 
 
 ### Metodo formalParameterList ###
@@ -305,6 +323,3 @@ def p_expression_12(p): #fazer metodo number_literal # fazer metodo boolean
                     | ID OPEN_PARENTHESES normalFormalParameter CLOSE_PARENTHESES 
     '''
 
-parser = yacc.yacc()
-
-parser.parse()
